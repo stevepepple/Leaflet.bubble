@@ -1,31 +1,28 @@
-Leaflet.heat
+Leaflet.bubble
 ==========
 
-A tiny, simple and fast [Leaflet](http://leafletjs.com) heatmap plugin.
-Uses [simpleheat](https://github.com/mourner/simpleheat) under the hood,
-additionally clustering points into a grid for performance.
+A simple library for bubble maps (or circle cartogram) visualization types.
 
+[Demo is here](http://stevepepple.github.io/Leaflet.bubble/)
 
-## Demos
+## About
+This plugin is designed for Leaflet and Mapbox. All you need is a geoJSON file with a numeric value that will be visualized.
 
-- [10,000 points &rarr;](http://leaflet.github.io/Leaflet.heat/demo)
-- [Adding points dynamically &rarr;](http://leaflet.github.io/Leaflet.heat/demo/draw.html)
+As with bubble charts, the size of the bubble's area should be used to visualize quantities, not the bubble radius.
+
+This library is inspired by CartoDB bubble maps and
 
 
 ## Basic Usage
 
 ```js
-var heat = L.heatLayer([
-	[50.5, 30.5, 0.2], // lat, lng, intensity
-	[50.6, 30.4, 0.5],
-	...
-], {radius: 25}).addTo(map);
+bubbles = L.bubbleLayer(ca_cities, { property: "population" })
 ```
 
-To include the plugin, just use `leaflet-heat.js` from the `dist` folder:
+To include the plugin, just use `leaflet-bubble.js` from the `dist` folder:
 
 ```html
-<script src="leaflet-heat.js"></script>
+<script src="leaflet-bubble.js"></script>
 ```
 
 ## Building
@@ -35,9 +32,20 @@ To build the dist files run:
 
 ## Reference
 
-#### L.heatLayer(latlngs, options)
+#### L.bubbleLayer(geoJSON, options)
 
-Constructs a heatmap layer given an array of points and an object with the following options:
+Creates a bubble or circle cartogram layer given an geoJSON file of points. Library accepts the following options.
+You MUST specify a **property** field that is a **numeric** value.
+
+//  color: blue,
+//  legend : true,
+//  max_radius: 40,
+//  scale: <chroma-js color scale>,
+//  style: { radius: 10, fillColor: "#74acb8", color: "#555", weight: 1, opacity: 0.8, fillOpacity: 0.5 }
+//  tooltip: false,
+
+- **color** - fill and border color of the bubbles or circles
+
 - **minOpacity** - the minimum opacity the heat will start at
 - **maxZoom** - zoom level where the points reach maximum intensity (as intensity scales with zoom),
   equals `maxZoom` of the map by default
@@ -62,33 +70,4 @@ Unless `max` option is specified, intensity should range between `0.0` and `1.0`
 
 ## Changelog
 
-### 0.2.0 &mdash; Oct 26, 2015
-
-- Fixed intensity to work properly with `max` option.
-- Fixed zoom animation on Leaflet 1.0 beta 2.
-- Fixed tiles and point intensity in demos.
-
-#### 0.1.3 &mdash; Nov 25, 2015
-
-- Fixed some edge cases when handling point intensity.
-- Added `minOpacity` option.
-
-#### 0.1.2 &mdash; Nov 5, 2014
-
-- Added compatibility with Leaflet 0.8-dev.
-
-#### 0.1.1 &mdash; Apr 22, 2014
-
-- Fixed overlaying two heatmaps on top of each other.
-- Fixed rare animation issues.
-
-#### 0.1.0 &mdash; Feb 3, 2014
-
-- Added `addLatLng`, `setLatlngs`, `setOptions` and `redraw` methods.
-- Added `max` option and support for different point intensity values (through `LatLng` third argument).
-- Added `gradient` option to customize colors.
-
-#### 0.0.1 &mdash; Jan 31, 2014
-
-- Initial release.
-
+### 0.1 &mdash; Mar 12, 2015
