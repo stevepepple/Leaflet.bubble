@@ -12,7 +12,7 @@ This library is inspired by CartoDB bubble maps and [Vladimir Agafonkin's Leafle
 
 As with bubble charts, the size of the bubble's area should be used to visualize quantities, not the bubble radius. This library takes a value for each point and scales the area of map circles.
 
-![Example of Leaflet.Bubble ](/dist/index.png =500x)  
+<img src="dist/index.png" alt="Drawing" style="width: 500px;"/>  
 
 
 ## Basic Usage
