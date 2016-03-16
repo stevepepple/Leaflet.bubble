@@ -21,6 +21,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     options.max_radius = options.hasOwnProperty('max_radius') ? options.max_radius : 40;
     options.legend = options.hasOwnProperty('legend') ? options.legend : false;
     options.tooltip = options.hasOwnProperty('tooltip') ? options.tooltip : false;
+    options.scale = options.hasOwnProperty('scale') ? options.scale : false;
 
     // TODO: set the minum radius to the radius in the style
     options.style = { radius: 10, fillColor: "#74acb8", color: "#555", weight: 1, opacity: 0.8, fillOpacity: 0.5 }
@@ -55,7 +56,6 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     }
 
     if (this.options.legend) {
-      console.log(this._scale, this._max)
       this.showLegend(this._scale, this._max);
     }
 
@@ -75,13 +75,23 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
       .domain([0, max])
       .range([min_area, max_area]);
 
+    var normal = d3_scale.scaleLinear()
+     .domain([0,max])
+     .range([0, 1]);
+
     // Store for reference
     this._scale = scale;
+    this._normal = normal;
     this._max = max;
 
     // Use the selected property
     var property = this.options.property;
     var style = this.options.style;
+    var fill_scale = false;
+
+    if (this.options.scale) {
+      fill_scale = chroma.scale(this.options.scale);
+    }
 
     return new L.geoJson(this._geojson, {
 
@@ -94,6 +104,9 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
         var area = scale(total);
         var radius = Math.sqrt(area / Math.PI)
         style.radius = radius;
+
+        // If the option include a scale, use it
+        if (fill_scale) { style.fillColor = fill_scale(normal(total)) }
         style.color = chroma(style.fillColor).darken().hex()
 
         // Create the circleMarker object
@@ -116,6 +129,15 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     var legend = L.control({position: 'bottomright'});
     var max_radius = this.options.max_radius;
     var fill = this.options.style.fillColor;
+    var fill_scale = false;
+
+    var normal = d3_scale.scaleLinear()
+     .domain([0,max])
+     .range([0, 1]);
+
+    if (this.options.scale) {
+      fill_scale = chroma.scale(this.options.scale);
+    }
 
     legend.onAdd = function(map) {
       var div = L.DomUtil.create('div', 'info legend');
@@ -124,11 +146,12 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
 
       for (var i = 3; i > 0; i--) {
 
-        var area = scale(max / i  / 2);
+        var area = scale(max / i / 2);
         var radius = Math.sqrt(area / Math.PI)
-        console.log('radius', radius)
-
         var item = L.DomUtil.create('div', 'bubble');
+
+        // If theres a color scale, use it
+        if (fill_scale) { fill = fill_scale(normal(max / i)) }
 
         item.innerHTML = '<svg height="' + (max_radius * 2)  +'" width="' + (max_radius * 2 - (max_radius / 2)) + '">' +
           '<circle cx="' + radius + '" cy="' + max_radius + '" r="' + radius + '" stroke="' + chroma(fill).darken().hex() + '" stroke-width="1" fill="' + fill +'" />' +
