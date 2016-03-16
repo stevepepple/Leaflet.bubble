@@ -39,9 +39,10 @@ map.addLayer(layer);
 
 // Pass Leaflet.bubble as GeoJSON object and amount property to visualize
 bubbles = L.bubbleLayer(ca_cities, {
-  property: "population",
+  property: 'population',
   legend: true,
   max_radius : 40,
+  scale: 'YlGnBu',
   tooltip : true
 })
 
