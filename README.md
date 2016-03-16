@@ -8,9 +8,12 @@ A simple library for visualizing bubble maps (or circle cartograms) with Leaflet
 ## About
 This plugin is designed for Leaflet and Mapbox. All you need is a geoJSON file with a numeric value that will be visualized.
 
-As with bubble charts, the size of the bubble's area should be used to visualize quantities, not the bubble radius.
-
 This library is inspired by CartoDB bubble maps and [Vladimir Agafonkin's Leaflet heatmap plugin](https://github.com/Leaflet/Leaflet.heat).
+
+As with bubble charts, the size of the bubble's area should be used to visualize quantities, not the bubble radius. This library takes a value for each point and scales the area of map circles.
+
+![Example of Leaflet.Bubble ](/dist/index.png)  
+
 
 ## Basic Usage
 
@@ -35,11 +38,7 @@ To build the dist files run:
 Creates a bubble or circle cartogram layer given an geoJSON file of points. Library accepts the following options.
 You MUST specify a **property** field that is a **numeric** value.
 
-//  legend : true,
-//  max_radius: 40,
-//  scale: <chroma-js color scale>,
-//  style: { radius: 10, fillColor: "#74acb8", color: "#555", weight: 1, opacity: 0.8, fillOpacity: 0.5 }
-//  tooltip: false,
+Here are the other options:
 
 - **color** - fill and border color of the bubbles or circles
 - **legend** - show a legend; `true` by default
