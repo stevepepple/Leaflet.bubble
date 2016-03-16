@@ -4,7 +4,6 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
   // options: {
   //  property: REQUIRED
 
-  //  color: blue,
   //  legend : true,
   //  max_radius: 40,
   //  scale: <chroma-js color scale>,
@@ -18,9 +17,9 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     this._geojson = geojson;
 
-    options.max_radius = options.hasOwnProperty('max_radius') ? options.max_radius : 40;
-    options.legend = options.hasOwnProperty('legend') ? options.legend : false;
-    options.tooltip = options.hasOwnProperty('tooltip') ? options.tooltip : false;
+    options.max_radius = options.hasOwnProperty('max_radius') ? options.max_radius : 35;
+    options.legend = options.hasOwnProperty('legend') ? options.legend : true;
+    options.tooltip = options.hasOwnProperty('tooltip') ? options.tooltip : true;
     options.scale = options.hasOwnProperty('scale') ? options.scale : false;
 
     // TODO: set the minum radius to the radius in the style
@@ -154,7 +153,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
         if (fill_scale) { fill = fill_scale(normal(max / i)) }
 
         item.innerHTML = '<svg height="' + (max_radius * 2)  +'" width="' + (max_radius * 2 - (max_radius / 2)) + '">' +
-          '<circle cx="' + radius + '" cy="' + max_radius + '" r="' + radius + '" stroke="' + chroma(fill).darken().hex() + '" stroke-width="1" fill="' + fill +'" />' +
+          '<circle cx="' + (radius + 1) + '" cy="' + max_radius + '" r="' + radius + '" stroke="' + chroma(fill).darken().hex() + '" stroke-width="1" fill="' + fill +'" />' +
            '<text font-size="11" text-anchor="middle" x="' + (radius) + '" y="' + (max_radius * 2) + '" fill="#AAA">' + numeral( max / i ).format('0 a');  + '</text>' +
         '</svg>';
 
