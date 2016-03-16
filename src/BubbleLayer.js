@@ -215,27 +215,9 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     }
 
     return valid;
-  },
-
-  _updateOptions: function() {
-    // Get options and apply to the library
-    this._heat.radius(this.options.radius || this._heat.defaultRadius, this.options.blur);
-
-    if (this.options.gradient) {
-        this._heat.gradient(this.options.gradient);
-    }
-    if (this.options.max) {
-        this._heat.max(this.options.max);
-    }
-  },
-
+  }
 
 });
-
-
-L.heatLayer = function (latlngs, options) {
-  return new L.HeatLayer(latlngs, options);
-};
 
 L.bubbleLayer = function (latlngs, options) {
 

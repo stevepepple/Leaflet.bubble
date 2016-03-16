@@ -23,7 +23,6 @@
     "d3-scale": "^0.6.4",
     "eslint": "^1.7.3",
     "eslint-config-mourner": "^1.0.1",
-    "simpleheat": "~0.2.0",
     "uglify-js": "^2.5.0"
   },
   "eslintConfig": {
