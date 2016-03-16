@@ -1,7 +1,7 @@
 Leaflet.bubble
 ==========
 
-A simple library for bubble maps (or circle cartogram) visualization types.
+A simple library for visualizing bubble maps (or circle cartograms) with Leaflet and Mapbox.
 
 [Demo is here](http://stevepepple.github.io/Leaflet.bubble/)
 
