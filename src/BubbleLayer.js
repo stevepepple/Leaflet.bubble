@@ -21,9 +21,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     options.legend = options.hasOwnProperty('legend') ? options.legend : true;
     options.tooltip = options.hasOwnProperty('tooltip') ? options.tooltip : true;
     options.scale = options.hasOwnProperty('scale') ? options.scale : false;
-
-    // TODO: set the minum radius to the radius in the style
-    options.style = { radius: 10, fillColor: "#74acb8", color: "#555", weight: 1, opacity: 0.8, fillOpacity: 0.5 }
+    options.style = options.hasOwnProperty('style') ? options.style : { radius: 10, fillColor: "#74acb8", color: "#555", weight: 1, opacity: 0.5, fillOpacity: 0.5 };
 
     L.setOptions(this, options);
 
@@ -129,6 +127,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     var max_radius = this.options.max_radius;
     var fill = this.options.style.fillColor;
     var fill_scale = false;
+    var opacity = this.options.style.opacity;
 
     var normal = d3_scale.scaleLinear()
      .domain([0,max])
@@ -153,7 +152,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
         if (fill_scale) { fill = fill_scale(normal(max / i)) }
 
         item.innerHTML = '<svg height="' + (max_radius * 2)  +'" width="' + (max_radius * 2 - (max_radius / 2)) + '">' +
-          '<circle cx="' + (radius + 1) + '" cy="' + max_radius + '" r="' + radius + '" stroke="' + chroma(fill).darken().hex() + '" stroke-width="1" fill="' + fill +'" />' +
+          '<circle cx="' + (radius + 1) + '" cy="' + max_radius + '" r="' + radius + '" stroke="' + chroma(fill).darken().hex() + '" stroke-width="1" opacity="' + opacity +'" fill="' + fill +'" />' +
            '<text font-size="11" text-anchor="middle" x="' + (radius) + '" y="' + (max_radius * 2) + '" fill="#AAA">' + numeral( max / i ).format('0 a');  + '</text>' +
         '</svg>';
 
