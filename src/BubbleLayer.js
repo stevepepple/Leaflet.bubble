@@ -16,6 +16,7 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     console.log("initalized: ", options, geojson)
 
     this._geojson = geojson;
+    this._legend = null;
 
     options.max_radius = options.hasOwnProperty('max_radius') ? options.max_radius : 35;
     options.legend = options.hasOwnProperty('legend') ? options.legend : true;
@@ -118,12 +119,16 @@ L.BubbleLayer = (L.Layer ? L.Layer : L.Class).extend({
     this._map = map;
     // Handle the native remove from map function
     map.removeLayer(this._layer);
+    if(this._legend !== null) {
+      map.removeControl(this._legend);
+    }
 
   },
 
   showLegend: function(scale, max){
 
     var legend = L.control({position: 'bottomright'});
+    this._legend = legend;
     var max_radius = this.options.max_radius;
     var fill = this.options.style.fillColor;
     var fill_scale = false;
